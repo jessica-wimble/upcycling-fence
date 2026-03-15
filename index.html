@@ -1,98 +1,179 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Secure Login</title>
+    <title>Login</title>
 
     <style>
-        body{
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg,#4facfe,#00f2fe);
-            height:100vh;
-            display:flex;
-            align-items:center;
-            justify-content:center;
+
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
         }
 
-        .login-box{
-            background:white;
-            padding:40px;
-            border-radius:10px;
-            box-shadow:0 10px 25px rgba(0,0,0,0.2);
-            text-align:center;
-            width:300px;
+        /* Login box */
+
+        .login {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            transition: opacity 0.6s;
         }
 
-        input{
-            width:100%;
-            padding:10px;
-            margin:10px 0;
-            border-radius:6px;
-            border:1px solid #ccc;
+        input {
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            border: none;
         }
 
-        button{
-            width:100%;
-            padding:10px;
-            border:none;
-            border-radius:6px;
-            background:#4facfe;
-            color:white;
-            font-size:16px;
-            cursor:pointer;
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background: #38bdf8;
+            cursor: pointer;
         }
 
-        button:hover{
-            background:#2d8df0;
+        button:hover {
+            background: #0ea5e9;
         }
 
-        #message{
-            margin-top:10px;
-            font-weight:bold;
+        #message {
+            margin-top: 10px;
         }
+
+        /* Lock icon */
+
+        .lock {
+            font-size: 60px;
+            transition: transform 0.5s;
+        }
+
+        /* Unlock animation */
+
+        .unlock {
+            animation: openLock 0.8s forwards;
+        }
+
+        @keyframes openLock {
+            0% {
+                transform: rotate(0deg);
+            }
+            40% {
+                transform: rotate(-20deg);
+            }
+            100% {
+                transform: rotate(20deg);
+            }
+        }
+
+        /* Hidden section */
+
+        #secret {
+            display: none;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s;
+        }
+
+        #secret.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
     </style>
-
 </head>
+
 <body>
 
-<div class="login-box">
-    <h2>Please enter the password to proceed!</h2>
+<div class="login" id="loginBox">
 
-    <input type="password" id="password" placeholder="Enter password">
+    <!--    <div class="lock" id="lockIcon">🔒</div>-->
+    <img src="images/cartoon-policeman-illustration-vector.jpg" alt="Login Image">
 
-    <button onclick="checkPassword()">Login</button>
+    <h2>Stop right there! If you want to unlock any further clues, you need to enter the correct password!</h2>
+
+    <input type="password" id="passwordInput" placeholder="Password">
+    <br>
+
+    <button onclick="unlock()">Unlock</button>
 
     <p id="message"></p>
 
 </div>
 
+<div id="secret">
+    <h1>Secret Area</h1>
+    <p>You unlocked the hidden section!</p>
+
+    <ul>
+        <li>Private files</li>
+        <li>Hidden tools</li>
+        <li>Admin content</li>
+    </ul>
+
+</div>
+
 <script>
 
-    // SHA256 hash of password: "mypassword123"
-    const correctHash = "6e659deaa85842cdabb5c6305fcc40033ba43772ec00d45c2a3c921741a5e377";
+    const correctHash = "046e5068c8ca7f6c7d854bc53bcc3008c1520f2e942b797a896ac5c288d30cf6";
 
-    async function checkPassword(){
+    async function unlock() {
 
-        const input = document.getElementById("password").value;
+        const input = document.getElementById("passwordInput").value;
         const message = document.getElementById("message");
 
         const hashed = await hashPassword(input);
+        console.log(input);
+        console.log(hashed)
+        if (hashed === correctHash) {
 
-        if(hashed === correctHash){
+            message.style.color = "lightgreen";
+            message.textContent = "Unlocking...";
 
-            message.style.color="green";
-            message.textContent="Access granted! Redirecting...";
+            setTimeout(() => {
 
-            setTimeout(()=>{
-                window.location.href = "welcome.html";
-            },1000);
+                document.getElementById("loginBox").style.opacity = "0";
 
-        }else{
+            }, 600);
 
-            message.style.color="red";
-            message.textContent="Incorrect password";
+            setTimeout(() => {
+
+                document.getElementById("loginBox").style.display = "none";
+                const secret = document.getElementById("secret");
+                secret.classList.add("show");
+
+            }, 1200);
+
+        } else {
+
+            message.style.color = "salmon";
+            message.textContent = "Wrong password, try again!!";
 
         }
 
+    }
+
+    async function hashPassword(password) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(password);
+
+        const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+
+        return hashHex;
     }
 
 </script>

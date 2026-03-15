@@ -11,5 +11,5 @@ async function hashPassword(password){
     return hashHex;
 }
 
-const res = await hashPassword("mypassword123");
+const res = await hashPassword("285363349221162425");
 console.log(res);
