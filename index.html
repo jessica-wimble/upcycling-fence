@@ -5,6 +5,16 @@
 
     <style>
 
+        .correct {
+            border: 2px solid #22c55e;
+            /*background-color: rgba(34,197,94,0.15);*/
+        }
+
+        .wrong {
+            border: 2px solid #ef4444;
+            /*background-color: rgba(239,68,68,0.15);*/
+        }
+
         body {
             font-family: Arial;
             background: #0f172a;
@@ -77,14 +87,27 @@
 
         /* Hidden section */
 
-        #secret {
+        #quizPage {
             display: none;
             opacity: 0;
             transform: translateY(40px);
             transition: all 0.8s;
         }
 
-        #secret.show {
+        #quizPage.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #picturePage {
+            display: none;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s;
+        }
+
+        #picturePage.show {
             display: block;
             opacity: 1;
             transform: translateY(0);
@@ -98,9 +121,9 @@
 <div class="login" id="loginBox">
 
     <!--    <div class="lock" id="lockIcon">🔒</div>-->
-    <img src="images/cartoon-policeman-illustration-vector.jpg" alt="Login Image">
+    <img src="images/jess_police.png" alt="Login Image" width="320" height="480">
 
-    <h2>Stop right there! If you want to unlock any further clues, you need to enter the correct password!</h2>
+    <h2>Stop right there! If you want to unlock any further clues, you need to tell me the correct password!</h2>
 
     <input type="password" id="passwordInput" placeholder="Password">
     <br>
@@ -111,14 +134,50 @@
 
 </div>
 
-<div id="secret">
-    <h1>Secret Area</h1>
-    <p>You unlocked the hidden section!</p>
+<div id="quizPage">
+
+    <h1>You have proceeded to the next round of the quiz!</h1>
+    <p>Answer all questions correctly to proceed to the final question.</p>
+
+    <div class="quiz">
+
+        <p>1. Who has scored the most goals this season?</p>
+        <input type="text" id="q1">
+
+        <p>2. Who has played the most Man1 matches this season?</p>
+        <input type="text" id="q2">
+
+        <p>3. Who has scored the most penalties?</p>
+        <input type="text" id="q3">
+
+        <p>4. Of all the players that have played for Man1, who has the best goal per minute ratio?</p>
+        <input type="text" id="q4">
+
+        <p>5. How many goals have all of the Man1 boys scored?</p>
+        <input type="text" id="q5">
+
+        <br><br>
+
+        <button onclick="checkAnswers()">Submit Answers</button>
+
+        <p id="quizMessage"></p>
+
+    </div>
+
+</div>
+
+<div id="picturePage">
+
+    <h1>Access Granted</h1>
+
+    <p>You solved the quiz!</p>
+
+    <p>Welcome to the next secret area.</p>
 
     <ul>
-        <li>Private files</li>
-        <li>Hidden tools</li>
-        <li>Admin content</li>
+        <li>More clues</li>
+        <li>Hidden files</li>
+        <li>Next puzzle</li>
     </ul>
 
 </div>
@@ -133,8 +192,6 @@
         const message = document.getElementById("message");
 
         const hashed = await hashPassword(input);
-        console.log(input);
-        console.log(hashed)
         if (hashed === correctHash) {
 
             message.style.color = "lightgreen";
@@ -149,8 +206,8 @@
             setTimeout(() => {
 
                 document.getElementById("loginBox").style.display = "none";
-                const secret = document.getElementById("secret");
-                secret.classList.add("show");
+                const quizPage = document.getElementById("quizPage");
+                quizPage.classList.add("show");
 
             }, 1200);
 
@@ -174,6 +231,57 @@
         const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
 
         return hashHex;
+    }
+
+    function checkAnswers() {
+        const answers = {
+            q1: ["anna", "anna f", "anna flanders"],
+            q2: ["jess", "jess w", "jess wimble"],
+            q3: ["dave a", "dave ansell", "david ansell"],
+            q4: ["stu", "stu c", "stuart", "stuart c", "stuart carvel"],
+            q5: ["100"]
+        };
+
+        let allCorrect = true;
+
+        for (let id in answers) {
+
+            const input = document.getElementById(id);
+            const value = input.value.trim().toLowerCase();
+
+            input.classList.remove("correct", "wrong");
+
+            if (answers[id].includes(value)) {
+
+                input.classList.add("correct");
+
+            } else {
+
+                input.classList.add("wrong");
+                allCorrect = false;
+
+            }
+        }
+
+        const message = document.getElementById("quizMessage");
+
+        if (allCorrect) {
+
+            message.style.color = "lightgreen";
+            message.textContent = "All answers correct! Proceeding...";
+
+            setTimeout(() => {
+                document.getElementById("quizPage").style.display = "none";
+                const next = document.getElementById("picturePage");
+                next.classList.add("show");
+            }, 1200);
+
+        } else {
+
+            message.style.color = "salmon";
+            message.textContent = "Some answers are incorrect. Please try again.";
+
+        }
     }
 
 </script>
