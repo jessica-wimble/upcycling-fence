@@ -123,6 +123,33 @@
             opacity: 1;
             transform: translateY(0);
         }
+        #picturePage {
+            display: none;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s;
+
+            /* Gold background */
+            background: linear-gradient(145deg, #ffd700, #ffb700);
+
+            color: #1e293b; /* darker text for contrast */
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); /* soft gold glow */
+        }
+
+        #picturePage.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #picturePage h1 {
+            color: #1e293b;
+            text-shadow: 0 0 8px rgba(255,255,255,0.6);
+        }
 
     </style>
 </head>
@@ -190,17 +217,17 @@
     <p>You need to submit back to Jess, the following numbers with the matching Man1 player.</p>
 
 
-    <p>408 (8)</p> Jen
-    <p>514 (12)</p> Dave P
-    <p>593 </p> Livi
-    <p>648</p> Ben
-    <p>651</p> Josh C
-    <p>660</p> Dave A
-    <p>696</p> Josie
-    <p>696</p> Anna
-    <p>744</p> Jess
+    <p class="number">660</p>
+    <p class="number">408</p>
+    <p class="number">593</p>
+    <p class="number">744</p>
+    <p class="number">514</p>
+    <p class="number">648</p>
+    <p class="number">651</p>
+    <p class="number">696</p>
+    <p class="number">696</p>
 
-    Jen, Ben, Josh C, Josie, Anna, Dave A, Dave P, Jess, Livi
+<!--    Jen, Ben, Josh C, Josie, Anna, Dave A, Dave P, Jess, Livi-->
 
 
 </div>
@@ -297,6 +324,7 @@
                 document.getElementById("quizPage").style.display = "none";
                 const next = document.getElementById("picturePage");
                 next.classList.add("show");
+                shuffle()
             }, 1200);
 
         } else {
@@ -305,6 +333,25 @@
             message.textContent = "Some answers are incorrect. Please try again.";
 
         }
+    }
+
+    function shuffle(){
+        const numbers = Array.from(document.querySelectorAll('#picturePage .number'));
+
+        // Shuffle function (Fisher–Yates shuffle)
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        const shuffledNumbers = shuffle(numbers);
+
+        // Append the shuffled numbers back into the div
+        const container = document.getElementById('picturePage');
+        shuffledNumbers.forEach(p => container.appendChild(p));
     }
 
 </script>
