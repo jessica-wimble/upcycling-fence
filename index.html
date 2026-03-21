@@ -56,6 +56,17 @@
             background: #0ea5e9;
         }
 
+        .submit-btn {
+            background: linear-gradient(145deg, #ffd700, #ffb700);
+            color: #1e293b;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(255, 215, 0, 0.4);
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(145deg, #ffcc00, #e6a800);
+        }
+
         #message {
             margin-top: 10px;
         }
@@ -137,7 +148,8 @@
 <div id="quizPage">
 
     <h1>You have proceeded to the next round of the quiz!</h1>
-    <p>Answer all questions correctly to continue.</p>
+    <p>However, I need to need to be sure you are on the Man1 team! To verify your identity and continue the quiz,
+        answer all questions correctly.</p>
 
     <div class="quiz">
 
@@ -161,7 +173,7 @@
 
         <br><br>
 
-        <button onclick="checkAnswers()">Submit Answers</button>
+        <button class="submit-btn" onclick="checkAnswers()">Submit Answers to Unlock the Final Round!</button>
 
         <p id="quizMessage"></p>
 
@@ -173,9 +185,23 @@
 
     <h1>Access Granted!!!</h1>
 
-    <p>Well done! You have made it through to the next section of the quiz</p>
+    <p>Well done! You have made it through to the final section of the quiz</p>
 
-    <p>To unlock your final clue, you need to return to Jess with Roger Federer's birthday!</p>
+    <p>You need to submit back to Jess, the following numbers with the matching Man1 player.</p>
+
+
+    <p>408 (8)</p> Jen
+    <p>514 (12)</p> Dave P
+    <p>593 </p> Livi
+    <p>648</p> Ben
+    <p>651</p> Josh C
+    <p>660</p> Dave A
+    <p>696</p> Josie
+    <p>696</p> Anna
+    <p>744</p> Jess
+
+    Jen, Ben, Josh C, Josie, Anna, Dave A, Dave P, Jess, Livi
+
 
 </div>
 
