@@ -5,6 +5,7 @@
 
     <style>
 
+
         .correct {
             border: 2px solid #22c55e;
             /*background-color: rgba(34,197,94,0.15);*/
@@ -175,15 +176,14 @@
 <div id="quizPage">
 
     <h1>You have proceeded to the next round of the quiz!</h1>
-    <p>However, I need to need to be sure you are on the Man1 team! To verify your identity and continue the quiz,
-        answer all questions correctly.</p>
+    <p>To unlock the final question, answer the following questions correctly.</p>
 
     <div class="quiz">
 
         <p>1. Who has scored the most goals this season?</p>
         <input type="text" id="q1">
 
-        <p>2. Who has played the most Man1 matches this season?</p>
+        <p>2. How many matches has the entire man 1 team played in?</p>
         <input type="text" id="q2">
 
         <p>3. Who has scored the most penalties?</p>
@@ -192,11 +192,6 @@
         <p>4. Of all the players that have played for Man1, who has the best goal per minute ratio?</p>
         <input type="text" id="q4">
 
-        <p>5. How many goals have all of the Man1 boys scored?*</p>
-        <p style="font-size: 0.9em; color: gray;">
-            *External resources can be used to calculate this
-        </p>
-        <input type="text" id="q5">
 
         <br><br>
 
@@ -214,27 +209,26 @@
 
     <p>Well done! You have made it through to the final section of the quiz</p>
 
-    <p>You need to submit back to Jess, the following numbers with the matching Man1 player.</p>
+    <p>You need to submit back to Jess, the following numbers with the matching Man1 member.</p>
 
-
-    <p class="number">660</p>
-    <p class="number">408</p>
-    <p class="number">593</p>
-    <p class="number">744</p>
-    <p class="number">514</p>
-    <p class="number">648</p>
-    <p class="number">651</p>
-    <p class="number">696</p>
-    <p class="number">696</p>
-
-<!--    Jen, Ben, Josh C, Josie, Anna, Dave A, Dave P, Jess, Livi-->
+    <p class="number">648</p> <!--  Livi  -->
+    <p class="number">756</p> <!--  Anna  -->
+    <p class="number">720</p> <!--  Dave A  -->
+    <p class="number">756</p> <!--  Josie  -->
+    <p class="number">653</p> <!--  Dave P  -->
+    <p class="number">0</p> <!--  Jon  -->
+    <p class="number">408</p> <!--  Jen  -->
+    <p class="number">804</p> <!--  Jess  -->
+    <p class="number">514</p> <!--  Ben  -->
+    <p class="number">611</p> <!--  James T  -->
+    <p class="number">711</p> <!--  Josh  -->
 
 
 </div>
 
 <script>
 
-    const correctHash = "046e5068c8ca7f6c7d854bc53bcc3008c1520f2e942b797a896ac5c288d30cf6";
+    const correctHash = "992f8c275db25baa277428223d40f569a52ab3dcd52c4f10613e721d423d7b7e";
 
     async function unlock() {
 
@@ -286,10 +280,9 @@
     function checkAnswers() {
         const answers = {
             q1: ["anna", "anna f", "anna flanders"],
-            q2: ["jess", "jess w", "jess wimble"],
+            q2: ["1", "one"],
             q3: ["dave a", "dave ansell", "david ansell"],
-            q4: ["stu", "stu c", "stuart", "stuart c", "stuart carvel"],
-            q5: ["100"]
+            q4: ["stu", "stu c", "stuart", "stuart c", "stuart carvel"]
         };
 
         let allCorrect = true;
@@ -334,26 +327,6 @@
 
         }
     }
-
-    function shuffle(){
-        const numbers = Array.from(document.querySelectorAll('#picturePage .number'));
-
-        // Shuffle function (Fisher–Yates shuffle)
-        function shuffle(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        const shuffledNumbers = shuffle(numbers);
-
-        // Append the shuffled numbers back into the div
-        const container = document.getElementById('picturePage');
-        shuffledNumbers.forEach(p => container.appendChild(p));
-    }
-
 </script>
 
 </body>
