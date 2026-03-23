@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 
     <style>
@@ -38,6 +39,11 @@
             transition: opacity 0.6s;
         }
 
+        .login {
+            width: 90%;
+            max-width: 400px;
+        }
+
         input {
             padding: 10px;
             margin: 10px;
@@ -51,6 +57,12 @@
             border-radius: 5px;
             background: #38bdf8;
             cursor: pointer;
+        }
+
+        input, button {
+            width: 100%;
+            max-width: 300px;
+            font-size: 16px;
         }
 
         button:hover {
@@ -95,6 +107,12 @@
             100% {
                 transform: rotate(20deg);
             }
+        }
+
+        .responsive-img {
+            width: 100%;
+            max-width: 320px;
+            height: auto;
         }
 
         /* Hidden section */
@@ -152,6 +170,41 @@
             text-shadow: 0 0 8px rgba(255,255,255,0.6);
         }
 
+        @media (max-width: 600px) {
+
+            body {
+                padding: 10px;
+                height: auto;
+            }
+
+            .login {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            #quizPage, #picturePage {
+                width: 100%;
+                padding: 15px;
+            }
+
+            .number {
+                font-size: 18px;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        @media (min-width: 900px) {
+            .login {
+                max-width: 500px;
+            }
+        }
+
     </style>
 </head>
 
@@ -160,7 +213,7 @@
 <div class="login" id="loginBox">
 
     <!--    <div class="lock" id="lockIcon">🔒</div>-->
-    <img src="images/jess_police.png" alt="Login Image" width="320" height="480">
+    <img src="images/jess_police.png" alt="Login Image" class="responsive-img">
 
     <h2>Stop right there! If you want to unlock any further clues, you need to tell me the correct password!</h2>
 
