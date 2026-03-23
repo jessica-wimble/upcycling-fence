@@ -21,10 +21,13 @@
             font-family: Arial;
             background: #0f172a;
             color: white;
+
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+
+            min-height: 100vh; /* FIX */
+            padding: 20px;     /* ADD */
             flex-direction: column;
         }
 
@@ -46,13 +49,14 @@
 
         input {
             padding: 10px;
-            margin: 10px;
+            margin: 10px 0; /* CHANGE: remove side margin */
             border-radius: 5px;
             border: none;
         }
 
         button {
             padding: 10px 15px;
+            margin: 10px 0; /* ADD THIS */
             border: none;
             border-radius: 5px;
             background: #38bdf8;
@@ -61,8 +65,8 @@
 
         input, button {
             width: 100%;
-            max-width: 300px;
             font-size: 16px;
+            box-sizing: border-box; /* ADD THIS */
         }
 
         button:hover {
@@ -111,8 +115,12 @@
 
         .responsive-img {
             width: 100%;
-            max-width: 320px;
+            max-width: 300px;
             height: auto;
+        }
+
+        .quiz input {
+            width: 100%;
         }
 
         /* Hidden section */
@@ -130,33 +138,25 @@
             transform: translateY(0);
         }
 
-        #picturePage {
-            display: none;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.8s;
-        }
-
         #picturePage.show {
             display: block;
             opacity: 1;
             transform: translateY(0);
         }
+
         #picturePage {
             display: none;
             opacity: 0;
             transform: translateY(40px);
             transition: all 0.8s;
 
-            /* Gold background */
             background: linear-gradient(145deg, #ffd700, #ffb700);
-
-            color: #1e293b; /* darker text for contrast */
+            color: #1e293b;
             padding: 30px;
             border-radius: 10px;
             text-align: center;
 
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); /* soft gold glow */
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
         }
 
         #picturePage.show {
@@ -174,29 +174,19 @@
 
             body {
                 padding: 10px;
-                height: auto;
             }
 
             .login {
-                padding: 20px;
-            }
-
-            h2 {
-                font-size: 18px;
-            }
-
-            #quizPage, #picturePage {
-                width: 100%;
                 padding: 15px;
             }
 
-            .number {
-                font-size: 18px;
+            input {
+                margin: 8px 0;
             }
-        }
 
-        * {
-            box-sizing: border-box;
+            button {
+                margin-top: 10px;
+            }
         }
 
         @media (min-width: 900px) {
@@ -229,7 +219,11 @@
 <div id="quizPage">
 
     <h1>You have progressed to the next round of the quiz!</h1>
-    <p>To unlock the final question, answer the following questions correctly.</p>
+    <p>But wait, can I really be sure you are a man1 member?</p>
+
+    <img src="images/jess_detective.png" alt="Login Image" class="responsive-img">
+
+    <p>Prove it to me by answering the following questions!!</p>
 
     <div class="quiz">
 
@@ -267,6 +261,8 @@
     <h1>Access Granted!!!</h1>
 
     <p>Well done! You have made it through to the final section of the quiz</p>
+
+    <img src="images/jess_gold.png" alt="Login Image" class="responsive-img">
 
     <p>You need to submit back to Jess, the following numbers with the matching Man1 member.</p>
 
