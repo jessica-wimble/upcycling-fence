@@ -27,7 +27,7 @@
             align-items: center;
 
             min-height: 100vh; /* FIX */
-            padding: 20px;     /* ADD */
+            padding: 20px; /* ADD */
             flex-direction: column;
         }
 
@@ -167,7 +167,7 @@
 
         #picturePage h1 {
             color: #1e293b;
-            text-shadow: 0 0 8px rgba(255,255,255,0.6);
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
         }
 
         @media (max-width: 600px) {
@@ -239,7 +239,7 @@
         <p>4. Against which opponents did Stu make his cameo appearance, scoring a one touch goal?</p>
         <input type="text" id="q4">
 
-        <p>5. How many different people have shotclocked for us this season?</p>
+        <p>5. Tell me all the people that have shotclocked for us this season (separated by ", ")</p>
         <input type="text" id="q5">
 
         <p>6. Against which opponents did Josh's outrageous shorts make their debut?</p>
@@ -338,7 +338,6 @@
             q2: ["1", "one"],
             q3: ["dave a", "dave ansell", "david ansell"],
             q4: ["barbarians", "barbs", "warriors barbarians", "warriors barbs"],
-            q5: ["7", "seven"],
             q6: ["phoenix", "lancaster phoenix", "lancs phoenix", "phoenix 1", "lancs phoenix 1", "lancaster phoenix 1"]
         };
 
@@ -351,15 +350,22 @@
 
             input.classList.remove("correct", "wrong");
 
-            if (answers[id].includes(value)) {
-
-                input.classList.add("correct");
+            if (id === "q5") {
+                const validatedNames = validateNames(value)
+                if (validatedNames.allValid) {
+                    input.classList.add("correct");
+                } else {
+                    input.classList.add("wrong");
+                    allCorrect = false;
+                }
 
             } else {
-
-                input.classList.add("wrong");
-                allCorrect = false;
-
+                if (answers[id].includes(value)) {
+                    input.classList.add("correct");
+                } else {
+                    input.classList.add("wrong");
+                    allCorrect = false;
+                }
             }
         }
 
@@ -383,6 +389,55 @@
             message.textContent = "Some answers are incorrect. Please try again.";
 
         }
+    }
+
+    function validateNames(input) {
+        const allowedNames = [
+            ["karen", "karen harrison"],
+            ["stevie", "steven", "stevie lupton", "steven lupton"],
+            ["josh", "josh b", "josh brooks"],
+            ["stu", "stuart", "stu c", "stuart c", "stuart carvel", "stu carvel"],
+            ["rach", "rachel", "rachel bardsley", "rachel hosker"],
+            ["craig", "craig macleay", "crazy craig"],
+            ["jon", "jon wright", "jon w"]
+        ];
+
+        // Map each alias → group index
+        const nameToGroup = new Map();
+        allowedNames.forEach((group, index) => {
+            group.forEach(name => {
+                nameToGroup.set(name.toLowerCase(), index);
+            });
+        });
+
+        const inputNames = input.split(",");
+
+        const valid = [];
+        const invalid = [];
+        const usedGroups = new Set(); // track already matched groups
+
+        inputNames.forEach(originalName => {
+            const trimmedName = originalName.trim();
+            const normalized = trimmedName.toLowerCase();
+
+            if (nameToGroup.has(normalized)) {
+                const groupIndex = nameToGroup.get(normalized);
+
+                if (!usedGroups.has(groupIndex)) {
+                    valid.push(trimmedName); // keep original casing
+                    usedGroups.add(groupIndex);
+                }
+                // else: duplicate alias → ignore
+            } else {
+                invalid.push(trimmedName);
+            }
+        });
+
+        return {
+            valid,
+            invalid,
+            allValid: invalid.length === 0 && valid.length === 7
+        };
     }
 </script>
 
