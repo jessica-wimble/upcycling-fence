@@ -298,6 +298,11 @@
                 const quizPage = document.getElementById("quizPage");
                 quizPage.classList.add("show");
 
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth" // optional (use "auto" if you want instant)
+                });
+
             }, 1200);
 
         } else {
@@ -381,8 +386,6 @@
                 document.getElementById("quizPage").style.display = "none";
                 const next = document.getElementById("picturePage");
                 next.classList.add("show");
-
-                // 👇 Force scroll to top
                 window.scrollTo({
                     top: 0,
                     behavior: "smooth" // optional (use "auto" if you want instant)
