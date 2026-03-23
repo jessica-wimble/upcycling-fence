@@ -241,6 +241,7 @@
 
         <p>5. Tell me all the people that have shotclocked for us this season (separated by ", ")</p>
         <input type="text" id="q5">
+        <p id="q5Feedback"></p>
 
         <p>6. Against which opponents did Josh's outrageous shorts make their debut?</p>
         <input type="text" id="q6">
@@ -260,7 +261,7 @@
 
     <h1>Access Granted!!!</h1>
 
-    <p>Well done! You have made it through to the final section of the quiz</p>
+    <p>Congratulations! You have made it through to the final section of the quiz!!</p>
 
     <img src="images/jess_gold.png" alt="Login Image" class="responsive-img">
 
@@ -347,14 +348,23 @@
         for (let id in answers) {
 
             const input = document.getElementById(id);
-            const value = input.value.trim().toLowerCase();
+            let value = input.value.trim();
 
             input.classList.remove("correct", "wrong");
 
             if (id === "q5") {
-                const validatedNames = validateNames(value)
+                const validatedNames = validateNames(value);
+                const feedback = document.getElementById("q5Feedback");
+                console.log(validatedNames)
+
+                feedback.textContent = ""; // clear previous
+
+                if (validatedNames.valid.length > 0) {
+                    feedback.style.color = "salmon";
+                    feedback.textContent = "Correct names: " + validatedNames.valid.join(", ");
+                }
+
                 if (validatedNames.allValid) {
-                    console.log("all valid")
                     input.classList.add("correct");
                 } else {
                     input.classList.add("wrong");
@@ -362,6 +372,7 @@
                 }
 
             } else {
+                value = value.toLowerCase()
                 if (answers[id].includes(value)) {
                     input.classList.add("correct");
                 } else {
