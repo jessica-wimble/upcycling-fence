@@ -338,6 +338,7 @@
             q2: ["1", "one"],
             q3: ["dave a", "dave ansell", "david ansell"],
             q4: ["barbarians", "barbs", "warriors barbarians", "warriors barbs"],
+            q5: [],
             q6: ["phoenix", "lancaster phoenix", "lancs phoenix", "phoenix 1", "lancs phoenix 1", "lancaster phoenix 1"]
         };
 
@@ -353,6 +354,7 @@
             if (id === "q5") {
                 const validatedNames = validateNames(value)
                 if (validatedNames.allValid) {
+                    console.log("all valid")
                     input.classList.add("correct");
                 } else {
                     input.classList.add("wrong");
@@ -380,7 +382,12 @@
                 document.getElementById("quizPage").style.display = "none";
                 const next = document.getElementById("picturePage");
                 next.classList.add("show");
-                shuffle()
+
+                // 👇 Force scroll to top
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth" // optional (use "auto" if you want instant)
+                });
             }, 1200);
 
         } else {
